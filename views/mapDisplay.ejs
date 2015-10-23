@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+        html, body {
+            height: 100%;
+        }
+        #map {
+            margin-top:50px;
+            height: 80%;
+            width: 100%;
+        }
+    </style>
+    <title>Places Searchbox</title>
+
+</head>
+<body>
+
+<div id="map"></div>
+<script>
+
+
+
+
+    function initAutocomplete() {
+
+        var samp = [
+            {lat: 37.369929, lng: -121.924955},
+            {lat: 37.329929, lng: -121.914955},
+            {lat: 37.319929, lng: -121.974955},
+            {lat: 37.359929, lng: -121.984955}
+        ];
+
+        var cont = "You are here"	;
+        var userEnteredLocation = JSON.parse(localStorage.getItem('userEntry'));
+        console.log(userEnteredLocation);
+        //var location = {lat: 37.354108, lng: -121.955236};
+
+        //creating a map
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: userEnteredLocation,
+            zoom: 11,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        // creating a marker and attaching it to the above map
+        var mark = new google.maps.Marker({
+            position: userEnteredLocation,
+            map: map,
+
+        });
+//creating an information window
+        var info = new google.maps.InfoWindow({
+            content: cont
+        });
+        // adding a listener to to the marker, to open info. window on click
+        info.open(map,mark);
+
+        // adding the  samp locations as markers
+        function drop(){
+
+            for(var i = 0 ; i < samp.length ; i++){
+                addMarkerWithTimeout(samp[i],i*200);
+            }
+        }
+
+// after timeout ms function is executed
+        function addMarkerWithTimeout(position,timeout){
+            window.setTimeout(function(){
+                        new google.maps.Marker({
+                            position:position,
+                            map:map,
+                            animation: google.maps.Animation.DROP
+                        });
+                    },
+                    timeout);
+
+        }
+
+
+
+        drop();
+
+    }
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9GLrorUY8X7RNG4rGH6_q5LbdNifsWUw&libraries=places&callback=initAutocomplete"
+        async defer></script>
+</body>
+</html>

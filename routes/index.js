@@ -10,4 +10,9 @@ router.get('/mapDisplay', function(req, res, next) {
   res.render('mapDisplay');
 });
 
+router.get('/test',function(req,res,next){
+  res.render('text');
+
+});
+
 module.exports = router;

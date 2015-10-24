@@ -70,7 +70,7 @@
           <form class="form-group form-inline" id="contact-form">
 
             <input type="text" name="address" id="address" class="form-control controls" placeholder="Enter your street address" />
-
+            <a href="/mapDisplay">Go</a>
           </form>
         </div>
         <div class="col-md-3"></div>
@@ -247,8 +247,6 @@
 
     <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2JtOvQi-mR0Xu9PSlDK44bXKyCrRTVFA&libraries=places&sensor=false"></script>-->
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9GLrorUY8X7RNG4rGH6_q5LbdNifsWUw&libraries=places&callback=initAutocomplete"
-            async defer></script>
 
     <!--<script src="../javascripts/autocomplete.js"></script>-->
     <script src="../javascripts/hide_navbar.js"></script>
@@ -321,13 +319,16 @@
           var locObject = {lat:lat , lng:lng};
           console.log(locObject);
           localStorage.setItem('userEntry',JSON.stringify(locObject) );
-          parent.location = 'mapDisplay.ejs';
+          //parent.location = 'mapDisplay.ejs';
+
         });
 
       }
 
 
     </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9GLrorUY8X7RNG4rGH6_q5LbdNifsWUw&libraries=places&callback=initAutocomplete"
+            async defer></script>
     <script>$("div.navbar-fixed-top").autoHidingNavbar();</script>
 
 

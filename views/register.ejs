@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!-- Latest compiled and minified CSS = angular js -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Latest compiled and minified CSS = referring to the stylesheet-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!--angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+
+    <title>Login/Register Page</title>
+
+     <!--Attaching the styles of this page -->
+    <link rel="stylesheet" href="/stylesheets/registerView.css">
+
+</head>
+
+<!-- -->
+<body ng-app="regForm" ng-controller="formController as form">
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-4  ">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4>Login</h4></div>
+                <div class="panel-body">
+
+                    <form  id="login" name="loginForm" novalidate >
+
+                            <!--Email-->
+                            <div class="form-group" >
+
+                                <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
+                                <!--<label for="inputSuccess1">Email</label>-->
+                                <input type="text"
+                                       class="form-control"
+                                       id="inputSuccess1"
+                                       aria-describedby="helpBlock2"
+                                       ng-model="cred.username"
+                                       name="loginEmail"
+                                       aria-describedby="basic-addon1"
+                                       placeholder="Email"
+                                       data-toggle="tooltip"
+                                       title="Enter Registered Email">
+                                <!--<span id="helpBlock2" class="help-block">A block of help text that breaks-->
+                                    <!--onto a new line and may extend beyond one line.-->
+                                <!--</span>-->
+                                </div>
+
+                            </div>
+
+                            <!--Password-->
+                            <div class="form-group">
+
+                                <div class="input-group">
+                                        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+
+                                        <input type="password"
+                                           class="form-control"
+                                           id="inputSuccess2"
+                                           ng-model="cred.password"
+                                           ng-pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/"
+                                           name="loginPassword"
+                                           aria-describedby="basic-addon1"
+                                           placeholder="Password"
+                                                >
+                                    </div>
+
+                            </div>
+
+                            <!--<div class="checkbox">-->
+                                <!--<label>-->
+                                    <!--<input type="checkbox"> Remember Me-->
+                                <!--</label>-->
+
+                            <!--</div>-->
+
+                            <!--<p class="links"><button type="submit" class="btn btn-default">Submit</button></p>-->
+
+                            <!--Login Button-->
+                            <div class="form-group">
+                                <p ng-if="match === 1 " class="bg-success" ng-bind="login.success"></p>
+                                <p ng-show="match === 0" class="bg-danger" ng-bind="login.fail"></p>
+
+                                <p id="loginButton">
+                                    <button type="button" class="btn btn-primary" id="loginButton" ng-click="credCheck()">Login</button>
+                                </p>
+                            </div >
+
+                            <!--Forgot Password Link-->
+                            <a href="/forgotPassword">ForgotPassword?   </a>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading "><h4>New to Sugar Mommas? SignUp here !</h4></div>
+                <div class="panel-body">
+
+
+                    <!--Registeration form -->
+                    <form id="formFirstHalf" name="firstHalf" novalidate>
+
+                        <!--Username-->
+                        <div class="form-group ">
+
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+
+                                        <input required
+                                               ng-minlength="{{minValue}}"
+                                               ng-model="user.name"
+                                               name="username"
+                                               type="text"
+                                               class="form-control"
+                                               id="inputUsername"
+                                               placeholder="Username"
+                                               aria-describedby="basic-addon1"
+                                               data-toggle="tooltip"
+                                               title="Enter minimum4 characters, Eg.John "
+                                                >
+                                    </div>
+
+                                </div>
+
+
+
+                        <!--Email-->
+                        <div class="form-group" >
+                            <!--<label for="exampleInputPassword2">Email</label>-->
+
+                            <div class="input-group">
+                                         <span class="input-group-addon" id="basic-addon1">
+                                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                        </span>
+                                <input ng-model="user.email"
+                                       type="email"
+                                       class="form-control"
+                                       id="regEmail"
+                                       required
+                                       placeholder="Email"
+                                       name="email"
+                                       data-toggle="tooltip"
+                                       title="Enter a valid email ">
+                            </div>
+
+                                <!--<span ng-show="emailAccepted === 'true'">Registration Accepted</span>-->
+                                <!--<span ng-show="emailAccepted === 'false'">Registration Denied</span>-->
+
+
+
+                            <p class="bg-danger"
+                               ng-show="(response.emailValid === 'false')" ng-bind="signup.emailInvalid">
+
+                            </p>
+                            <p class="bg-warning"
+                               ng-show="(response.emailAlreadyExists === 'true')&&(response.emailValid === 'true')" ng-bind="signup.emailExists">
+                            </p>
+                        </div>
+
+
+
+                        <!--Password-->
+                        <div class="form-group " >
+
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+                                        <input  required
+                                                name="password"
+                                                ng-model="user.password"
+                                                type="password"
+                                                class="form-control"
+                                                id="inputPassword"
+                                                placeholder="Password"
+                                                ng-pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/"
+                                                aria-describedby="basic-addon1"
+                                                data-toggle="tooltip"
+                                                title="1uppercase,1lowercase character and 1 number,Eg. As3 ">
+
+
+                                    </div>
+
+                        </div>
+
+                                <!--ConfirmPassword-->
+                        <!--<div class="form-group" ng-class="{'has-success':((user.password || 1) == (user.confirmPassword || 2))}">-->
+                        <!--<label for="inputConfirmPassword">Confirm Password</label>-->
+
+                        <!--<span ng-show="((user.password || 1) == (user.confirmPassword || 2))">Passwords match</span>-->
+
+                        <!--<input required-->
+                        <!--name="confirmpassword"-->
+                        <!--ng-model="user.confirmPassword"-->
+                        <!--type="password"-->
+                        <!--class="form-control"-->
+                        <!--id="inputConfirmPassword"-->
+                        <!--placeholder="Confirm Password"-->
+                        <!--ng-pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/"-->
+                        <!-->
+                        <!--</div>-->
+
+                        <!--Email-->
+
+                        <!--City and Country -->
+                        <div class="form-group" id="location">
+
+                                    <div class="input-group">
+                                        <span class="input-group-addon" id="basic-addon1">
+                                            <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                                        </span>
+                                        <input name="country"  class="form-control"  placeholder="Zip/City" required id="cityCountrySelect" ng-model="location" aria-describedby="basic-addon1"
+                                               data-toggle="tooltip"
+                                               title="Enter your location with zip"
+                                                >
+
+
+                                    </div>
+
+                                    <!--<label for="">Location</label>-->
+
+
+                                    <!--<span>{{user.country}}</span>-->
+
+                                </div>
+
+                                <!--Zip/PostalCode-->
+                                <!--<div class="form-group">-->
+                                    <!--<label for="exampleInputEmail5">Zip/PostalCode</label>-->
+                                    <!--<input type="text" class="form-control" id="exampleInputEmail5" placeholder="Enter your Zip/PostalCode" ng-model="user.zip">-->
+                                <!--</div>-->
+
+                                <!--Birthday
+                                <div class="form-group">
+                                    <label for="exampleInputEmail8">Birthday</label>
+                                    <input type="date" class="form-control" id="exampleInputEmail8" placeholder="" ng-model="user.birthdate">
+                                </div>-->
+
+
+                        <!--Gender-->
+                        <!--Validate on form submission -->
+                        <div class="form-group">
+
+                                    <label for="exampleInputEmail8">Gender</label>
+                                    <input type="radio" name="sexMale" value="Male"  ng-model="user.gender" required>Male
+                                    <input type="radio" name="sexFemale" value="Female"  ng-model="user.gender">Female
+                                    <!--<span>{{user.gender}}</span>-->
+                                </div>
+
+
+
+                        <!--I am a -->
+                        <div class="form-group ">
+                                    <label for="exampleInputEmail8">I am a </label>
+                                    <input type="radio" name="fighter" value="Fighter"  ng-model="user.iama" required>Fighter
+                                    <input type="radio" name="supporter" value="Supporter"  ng-model="user.iama" >Supporter
+                                </div>
+
+                        <!--Year Diagnosed depends on the selection of I am a-->
+                        <div class="form-group ng-cloak" ng-show=" user.iama == 'Fighter' ">
+                                    <label for="exampleInputPassword2">Year Diagnosed</label>
+                                    <span ng-show="">Enter year between 1900 & 2100</span>
+                                    <input type="number"
+                                           class="form-control"
+                                           ng-model="user.yeardiagnosed"
+                                           placeholder="1900-2100"
+                                           name="yeardiagnosed"
+                                           min="1900"
+                                           max="2100"
+
+                                            >
+                                </div>
+
+
+
+
+                        <!--SignUp button-->
+                        <div class="form-group">
+                                    <button type="button"
+                                            class="btn btn-primary form-control"
+                                            id="buttonSignUp"
+                                            ng-click="verifyForm()"
+                                            ng-disabled="firstHalf.$invalid"
+                                            >SignUp</button>
+                                </div>
+
+
+                        <!--<pre ng-show="invalid === true">Invalid Registration</pre>-->
+
+                        <!--Mesages on Submit-->
+                        <p ng-show="response.formAccepted === 'true'"  class="ng-cloak">SignUp Sucessful</p>
+                        <p ng-show="response.formAccepted === 'false'"  class="ng-cloak">SignUp Failed</p>
+                        <!--<h6>{{response}}</h6>-->
+                        <!--<h2>{{firstHalf.$invalid}}</h2>-->
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--google maps api -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9GLrorUY8X7RNG4rGH6_q5LbdNifsWUw&libraries=places"
+        async defer></script>
+
+
+<!--<script src="https://code.jquery.com/jquery-2.1.4.js"></script>-->
+
+<script>
+
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip({
+            placement : 'top',
+            trigger: 'focus'
+        });
+    });
+
+</script>
+
+<script >
+   //global object to avoid name clashes
+    var register = {} ;
+
+   window.onload = registerCityCountry;
+
+    function registerCityCountry(){
+
+
+
+
+
+       console.log('1');
+        var input = document.getElementById('cityCountrySelect');
+        var options = {
+            types: ['(regions)']
+        };
+
+       var autocomplete = new google.maps.places.Autocomplete(input, options);
+        console.log('2');
+
+       autocomplete.addListener('place_changed',function(){
+           console.log('3');
+           //returns the location autocompleted in the input field
+           var result = autocomplete.getPlace();
+            register.location = result.formatted_address ;
+            console.log(result.formatted_address);
+           //lat and lng are extracted
+            var lat = result.geometry.location.lat();
+            var lng = result.geometry.location.lng();
+
+           // use the address_components to get the city,state,country etc.........
+           console.log(result.address_components);
+
+            var locObject = {lat:lat , lng:lng};
+            console.log(JSON.stringify(locObject));
+
+           register.latlng = locObject;
+           register.location = result.formatted_address;
+//           register.city = result.address_components[0].long_name;
+//           register.country = result.address_components[3].long_name;
+
+           // localStorage.setItem('userEntry',JSON.stringify(locObject) );
+
+       });
+
+
+    }
+
+
+
+    var app = angular.module('regForm',[]);
+
+    app.controller('formController',['$scope','$http','$window', function($scope,$http,$window) {
+
+                $scope.login = {};
+                $scope.signup = {};
+                $scope.login.success = 'Success';
+                $scope.login.fail = 'Fail';
+
+                $scope.signup.emailInvalid = 'Invalid Email';
+                $scope.signup.emailExists = 'Email already registered, use another';
+
+                $scope.minValue = 4 ;
+                $scope.testValue = 10;
+                $scope.location =  register.location;
+                $scope.response={};
+
+
+        $scope.verifyForm = function(){
+
+                    console.log('user info')
+                    console.log($scope.user);
+                    console.log(!$scope.firstHalf.$invalid);
+                    $scope.invalid = $scope.firstHalf.$invalid;
+                    //if the first four fields are filled
+                    if(!$scope.firstHalf.$invalid) {
+                        // adding attributes to user object
+                        $scope.user.latlng = register.latlng;
+                        $scope.user.location = register.location ;
+//                        $scope.user.city = register.city;
+//                        $scope.user.country = register.country;
+                        $http.post('/signup',$scope.user).success(function(res){
+                                    console.log(res);
+
+                                    // used to display message in HTML
+                                    $scope.response.emailAlreadyExists = res.emailAlreadyExists ;
+                                    $scope.response.emailValid = res.emailValid ;
+                                    console.log('scope.response is :---'+$scope.response.emailAlreadyExists);
+                                    // if res is true redirect to login page
+                                    if((res.emailAlreadyExists === 'false') && (res.emailValid === 'true')) {
+                                        console.log('entered true');
+                                       $scope.response.formAccepted = 'true';
+                                       // clear all text from inputs after sucessful submission only
+                                        $scope.user = null ;
+                                        $scope.location = null ;
+                                    }else{
+                                        $scope.response.formAccepted = 'false';
+                                    }
+                                }
+                        );
+                        console.log('valid form');
+                    }
+
+
+                };
+
+                $scope.credCheck = function(){
+                    console.log('entered');
+                    $http.post('/login',$scope.cred).success(function(res){
+//                        console.log('success'+"---"+res.match + "---"+res.error);
+
+                        $scope.match = res.match ;
+                        if(res.match === 1) {
+                            $window.location.href = '/users/' + res.usr ;
+                        }
+                    });
+
+                };
+
+
+
+            }]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+</body>
+
+</html>

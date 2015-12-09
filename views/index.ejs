@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -15,11 +15,13 @@
    <link href='https://fonts.googleapis.com/css?family=Henny+Penny' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Josefin Slab">
+    <link rel="stylesheet" href=""/>
 
 
   </head>
-  <body data-spy="scroll" data-target=".navbar-collapse">
-    <header class="nav-down">
+  <body data-spy="scroll" data-target=".navbar-collapse" ng-app="regForm" ng-controller="indexController">
+  <h1>{{invite}}</h1>
+  <header class="nav-down">
     <div class="navbar navbar-inverse navbar-fixed-top">
 
       <div class="container">
@@ -38,7 +40,7 @@
           <div class="collapse navbar-collapse" id="menu">
 
 
-            <button class="btn btn-warning navbar-right white menu-list" id="login-button">LOG IN</button>
+            <button class="btn btn-warning navbar-right white menu-list" id="login-button"><a href="/register">LOG IN</a></button>
 
             <ul class="nav navbar-nav navbar-right">
               <li class="navbar-right menu-list"><a href="#contactUs" class="blue">CONTACT US</a></li>
@@ -53,10 +55,12 @@
         </div>
     </div>
       </header>
+
+
     <main>
     <div class="container" id="Home">
       <div class="row">
-      <div class="col-md-2"></div>
+        <div class="col-md-2"></div>
       <div class="col-md-8" id="main-heading">
         <h1 id="main-heading-text">Connect and Share with people who understand.</h1>
       </div>
@@ -65,16 +69,34 @@
 
 
       <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+
           <form class="form-group form-inline" id="contact-form">
 
-            <input type="text" name="address" id="address" class="form-control controls" placeholder="Enter your street address" />
+
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">
+                <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+              </span>
+              <input type="text" name="address" id="address" class="form-control controls" placeholder="Enter your street address" />
+              <div class="input-group-addon"><a href="">Find People</a></div>
+            </div>
+
+            <!--<input type="text" name="address" id="address" class="form-control controls" placeholder="Enter your street address" />-->
+
+            <!-- on click of the atag fetch countries from databse and add it to map lat,lang array-->
             <a href="/mapDisplay">Go</a>
+
+
           </form>
+
         </div>
-        <div class="col-md-3"></div>
+       <div class="col-md-2"></div>
       </div>
+
+
+
       </div>
 
     <div class="video-container" id="about">
@@ -253,6 +275,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <!-- including angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <!--including ui-router -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
+
+
+
+<script>
+    var app = angular.module('regForm',[]);
+
+    //controller
+    app.controller('indexController',function($scope){
+       $scope.invite = 'Hello Krishnam Raju babu';
+    });
+
+</script>
 
 
 
@@ -299,37 +337,13 @@
         });
       });
     </script>
-
-
-
-    <script>
-      // This example adds a search box to a map, using the Google Place Autocomplete
-      // feature. People can enter geographical searches. The search box will return a
-      // pick list containing a mix of places and predicted search terms.
-
-      function initAutocomplete() {
-        // Create the search box and link it to the UI element.
-        var input = document.getElementById('address');
-        var searchBox = new google.maps.places.SearchBox(input);
-        searchBox.addListener('places_changed',function(){
-          var resultsArray = searchBox.getPlaces();
-          var loc = resultsArray[0].geometry.location;
-          var lat = resultsArray[0].geometry.location.lat();
-          var lng = resultsArray[0].geometry.location.lng();
-          var locObject = {lat:lat , lng:lng};
-          console.log(locObject);
-          localStorage.setItem('userEntry',JSON.stringify(locObject) );
-          //parent.location = 'mapDisplay.ejs';
-
-        });
-
-      }
-
-
-    </script>
+    <!-- googlemaps api-->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9GLrorUY8X7RNG4rGH6_q5LbdNifsWUw&libraries=places&callback=initAutocomplete"
             async defer></script>
-    <script>$("div.navbar-fixed-top").autoHidingNavbar();</script>
+    <!-- init function-->
+    <script src="../javascripts/test.js"></script>
+
+
 
 
 

@@ -3,37 +3,97 @@
 <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <style>
         html, body {
             height: 100%;
         }
         #map {
             margin-top:50px;
-            height: 80%;
-            width: 100%;
+            height: 60%;
+            width: 50%;
+            margin:50px auto;
+            border-radius: 5px;
+            border:2px seashell;
         }
     </style>
     <title>Places Searchbox</title>
 
 </head>
-<body>
-<p>Hello</p>
-<div id="map"></div>
+<body ng-app="regForm" ng-controller="mapDisplayController">
+<p>{{invite}}</p>
+<!--<p><%= countries %></p>-->
+
+
+
+
+            <div id="map">
+
+            </div>
+
+
+
+
+
+
+<!-- including angular -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+
 <script>
 
+    var mapDisplay = {};
+    mapDisplay.countries = [
+        {lat: 37.369929, lng: -121.924955},
+        {lat: 37.329929, lng: -121.914955},
+        {lat: 37.319929, lng: -121.974955},
+        {lat: 37.359929, lng: -121.984955}
+    ];
 
+
+
+    var app = angular.module('regForm',[]);
+    app.controller('mapDisplayController',['$scope','$http',function($scope,$http){
+
+        $scope.invite = 'Hello SK';
+
+        $http.get('/mapDisplay').success(function(response){
+            console.log('got page');
+
+        });
+
+        $http.get('/mapDisplayCountries').success(function(response){
+
+// here response is to be converted into its respective lat and lng and pushed iteratively
+            for(var i = 0 ; i < response.length ; i++) {
+                if(response[i].latlng) {
+                    mapDisplay.countries.push({
+                        lat: parseFloat(response[i].latlng.lat),
+                        lng: parseFloat(response[i].latlng.lng)
+                    });
+                }
+            }
+            console.log('pushed the countries into the array');
+            console.log(response.length + "----total countries")
+
+        });
+
+    }]);
+
+
+
+
+
+
+
+window.onload = iniAutocomplete;
 
 
     function iniAutocomplete() {
+       console.log('ONLOAD');
+        var samp = mapDisplay.countries;
 
-        var samp = [
-            {lat: 37.369929, lng: -121.924955},
-            {lat: 37.329929, lng: -121.914955},
-            {lat: 37.319929, lng: -121.974955},
-            {lat: 37.359929, lng: -121.984955}
-        ];
-
-        var cont = "You are here"	;
+        mapDisplay.cont = "You are here"	;
         var userEnteredLocation = JSON.parse(localStorage.getItem('userEntry'));
         console.log(userEnteredLocation);
         //var location = {lat: 37.354108, lng: -121.955236};
@@ -41,7 +101,8 @@
         //creating a map
         var map = new google.maps.Map(document.getElementById('map'), {
             center: userEnteredLocation,
-            zoom: 11,
+            zoom:11,
+            minZoom:1,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
@@ -50,19 +111,21 @@
             position: userEnteredLocation,
             map: map,
 
+
         });
 //creating an information window
         var info = new google.maps.InfoWindow({
-            content: cont
+            content: mapDisplay.cont
         });
         // adding a listener to to the marker, to open info. window on click
         info.open(map,mark);
 
         // adding the  samp locations as markers
         function drop(){
-
+            console.log('creating markers');
+            console.log("number of markers: "+samp.length);
             for(var i = 0 ; i < samp.length ; i++){
-                addMarkerWithTimeout(samp[i],i*200);
+                addMarkerWithTimeout(samp[i],0);
             }
         }
 
@@ -71,8 +134,10 @@
             window.setTimeout(function(){
                         new google.maps.Marker({
                             position:position,
-                            map:map,
-                            animation: google.maps.Animation.DROP
+                            icon:'../images/pink-blank.png',
+
+                            map:map
+//                            animation: google.maps.Animation.DROP
                         });
                     },
                     timeout);
@@ -85,8 +150,10 @@
 
     }
 
+
+
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9GLrorUY8X7RNG4rGH6_q5LbdNifsWUw&libraries=places&callback=iniAutocomplete"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9GLrorUY8X7RNG4rGH6_q5LbdNifsWUw&libraries=places"
         async defer></script>
 </body>
 </html>

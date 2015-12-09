@@ -1,0 +1,61 @@
+
+/*.ng-show{*/
+    /*display: none !important ;*/
+/*}*/
+
+body{
+background-color: #eeeeee;
+
+}
+
+.col-md-6,.col-md-4{
+    margin-top: 5vh;
+}
+
+.panel{
+    width:100%;
+}
+
+#register{
+    margin:0px;
+
+}
+.contanier{
+    margin-left:150px;
+}
+form{
+    width:95%;
+    height:85%;
+
+}
+#formFirstHalf{
+
+    margin: 5px 0px ;
+
+}
+.form-control{
+    width:100%;
+}
+.form-group{
+    margin-bottom: 20px;
+}
+#countryList{
+    margin-top:20px;
+}
+#buttonSignUp{
+
+    height:40px;
+    margin-bottom:4%;
+}
+span#info{
+    margin:0 auto;
+    background-color: #c6d3c8;
+    text-align: center;
+}
+span#greenWord{
+    background-color: #19ee31;
+}
+
+.panel-heading{
+    background-color:darkgrey!important;
+}

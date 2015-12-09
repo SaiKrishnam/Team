@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/details.css">
+
+    <title>Details</title>
+</head>
+
+<body ng-app="details" ng-controller="detailsCtrl">
+
+
+<div class="input-group">
+    <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+    <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+</div>
+
+
+<div >
+
+    <div class="well well-sm"><legend><h1>Suger Mommas Users</h1></legend>
+
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-3 col-sm-6" ng-repeat="user in allUsersInfo">
+                    <div class="media" >
+                        <a class="media-left" href="#">
+                            <img class="media-object"
+                                 ng-src="../images/profilePic/{{user.imagefile}}"
+                                 alt="Generic placeholder image"
+                                 width="100"
+                                 height="100"
+
+                                    >
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                {{user.name}}   <br/>
+                                <h5>{{user.iama}}</h5>
+                                <h5>{{user.location}}</h5>
+
+                            </h4>
+                        </div>
+                        <hr/>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</div>
+
+<hr/>
+
+
+
+
+
+
+
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
+<!--<script src="https://angular-file-upload.appspot.com/js/ng-file-upload.js"></script>-->
+<script src="../javascripts/details.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" >-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<meta name="viewport" content="width=device-width,initial-scale=1">-->
+    <!--&lt;!&ndash;Bootstrap&ndash;&gt;-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
+    <!--<title>Login</title>-->
+    <!--<link rel="stylesheet" href="/stylesheets/login.css">-->
+
+<!--</head>-->
+
+<!--<body ng-app="app" ng-controller="loginCtrl">-->
+
+
+<!--<div id="loginForm"  >-->
+
+<!--<div class="form-group position" >-->
+        <!--<label class="control-label" for="inputSuccess1">Email</label>-->
+        <!--<input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2" ng-model="cred.username">-->
+
+<!--</div>-->
+
+<!--<div class="form-group position">-->
+    <!--<label class="control-label" for="inputSuccess1">Password</label>-->
+    <!--<span id="forgotPassword"><a href="/forgotPassword">Forgot Password?</a></span>-->
+    <!--<input type="password" class="form-control" id="inputSuccess1" aria-describedby="helpBlock3" ng-model="cred.password">-->
+
+<!--</div>-->
+
+<!--<div class="form-group loginButton">-->
+    <!--<p ng-show="match === 1 ">Login Success</p>-->
+    <!--<p ng-show="match === 0">Login Failed</p>-->
+    <!--<p id="loginButton"><button type="button" class="btn btn-primary" id="loginButton" ng-click="credCheck()">Login</button></p>-->
+<!--</div >-->
+
+<!--<h4 id="message">Don't have an account? <a href="/register">Register Here</a></h4>-->
+
+
+
+<!--</div>-->
+
+
+<!--&lt;!&ndash; Angular &ndash;&gt;-->
+<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>-->
+
+<!--&lt;!&ndash; App Script &ndash;&gt;-->
+<!--<script>-->
+
+    <!--var app = angular.module('app', []);-->
+    <!--app.controller('loginCtrl',['$scope','$http','$window',function($scope,$http,$window){-->
+
+       <!--$scope.credCheck = function(){-->
+           <!--console.log('entered');-->
+           <!--$http.post('/cred',$scope.cred).success(function(res){-->
+                  <!--console.log('success'+"-&#45;&#45;"+res.match + "-&#45;&#45;"+res.error);-->
+
+                <!--$scope.match = res.match ;-->
+                <!--if(res.match === 1) {-->
+                    <!--$window.location.href = '/users/' + res.usr ;-->
+                <!--}-->
+           <!--});-->
+
+       <!--};-->
+
+       <!--}]);-->
+
+
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
